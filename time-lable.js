@@ -9,10 +9,7 @@ export class TimeLable{
         this.totalTime = Math.round(total);
         this.fps = fps;
         this.timeElem = timeElem;
-
-        
         this.time = Math.round(current);
-        // this.emitTimeAction = new EventEmitter();
     }
     
     get time() {
