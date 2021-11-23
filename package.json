@@ -1,8 +1,7 @@
 {
-  "name": "slider",
+  "name": "wtet-components",
   "version": "1.0.0",
-  "description": "",
-  "main": "slider.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +14,6 @@
   "bugs": {
     "url": "https://github.com/Bushynska357/slider/issues"
   },
-  "homepage": "https://github.com/Bushynska357/slider#readme"
+  "homepage": "https://github.com/Bushynska357/slider#readme",
+  "description": ""
 }
