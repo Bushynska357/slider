@@ -2,14 +2,7 @@
 import { Slider } from "./slider";
 
 export class VolumeSlider{
-    #isMuted = false;
-    #beforeValue;
-    #curentValue;
-    // #volumeChangeCallbacks;
-
-
-
-    constructor(initialValue, muteVolumeCallback, testVolumeChangeCallbacks) {
+      constructor(initialValue, muteVolumeCallback, testVolumeChangeCallbacks) {
  
         this.muteVolumeCallback = muteVolumeCallback;
         this.testVolumeChangeCallbacks = testVolumeChangeCallbacks;
@@ -17,19 +10,22 @@ export class VolumeSlider{
         this.volumeButton = document.getElementById('volume');
         var volumeContainer = document.querySelector(".volume-container");
         this.slider = new Slider(volumeContainer, 100, 0, 1);
+       
         this.slider.emitSliderAction.on("changeSlider", (data) => {
-            // console.log('data',data);
             this.testVolumeChangeCallbacks(data);
-           
-            
-         
-            // this.#sliderValueChanged(data);
         });
 
-
+        
+        
         this.volumeButton.addEventListener('click', (e)=>{
-            // console.log(this.muteVolumeCallback);
-            this.muteVolumeCallback();
+     
+                let {isVolumeMuted:volumeState, volumeLevel:volumeLevel}  = this.muteVolumeCallback();
+                console.log(volumeLevel,volumeState);
+                if(volumeState){
+                    this.slider.setValue(0);
+                }else{
+                    this.slider.setValue(volumeLevel);
+                }
           
         })
      
@@ -37,13 +33,6 @@ export class VolumeSlider{
         this.slider.setValue(initialValue);
         
     }
-
-    // onClickMute(callback){
-        
-    //     console.log(e);
-    //     callback();
-    // }
-
     setValue(value) {
         console.log(value);
         // this.#curentValue = value;
