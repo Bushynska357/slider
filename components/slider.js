@@ -1,5 +1,5 @@
-import { htmlToElement } from "./helper.js";
-import { EventEmitter } from "./eventemitter.js";
+import { htmlToElement } from "../helper.js";
+import { EventEmitter } from "../eventemitter.js";
 
 export class Slider {
   constructor(sliderWrapper, max, min, step) {

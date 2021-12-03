@@ -1,10 +1,9 @@
 
-import { Slider } from "wtet-components/slider";
-import { createStore } from "redux";
-import { volumeReducer } from "../redux/reducer";
-import { CHANGE_VOLUME } from "../redux/action";
+import { Slider } from "./slider";
 
-export class TimelineSlider {
-     constructor() {}
+export class TimelineSlider extends Slider {
+     constructor(...args) {
+          super(...args);
+     }
 
 }

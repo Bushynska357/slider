@@ -1,6 +1,6 @@
 export class Player{
 
-    constructor(){
+    constructor(timeline,time){
         this.scene = new Tetavi.THREE.Scene();
         this.camera = new Tetavi.THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -8,7 +8,7 @@ export class Player{
         document.body.appendChild(this.renderer.domElement);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-        this.controls = new TetaviExt.libOrbitControls(camera, renderer.domElement);
+        this.controls = new TetaviExt.libOrbitControls(this.camera, this.renderer.domElement);
         this.controls.target.set(0, 1.5, 0);
 
         this.camera.position.z = 5;
@@ -16,7 +16,7 @@ export class Player{
         this.controls.update();
 
         this.ambient = new Tetavi.THREE.AmbientLight(0x999999);
-        this.scene.add(ambient);
+        this.scene.add(this.ambient);
 
         this.spotLight = new Tetavi.THREE.SpotLight(0xffffff);
         this.spotLight.position.set(0, 5, 0);
@@ -25,17 +25,17 @@ export class Player{
         this.spotLight.penumbra = 0.1;
         this.spotLight.decay = 2;
         this.spotLight.distance = 200;
-        this.scene.add(spotLight);
+        this.scene.add(this.spotLight);
         this.scene.background = new Tetavi.THREE.Color(0x666666);
 
         this.material = new Tetavi.THREE.MeshPhongMaterial({ color: 0xaaaaaa });
         this.material.side = Tetavi.THREE.BackSide;
         this.bSize = 100;
         this.hSize = 10;
-        this.geometry = new Tetavi.THREE.BoxGeometry(bSize, hSize, bSize);
-        this.cube = new Tetavi.THREE.Mesh(geometry, material);
-        this.cube.position.set(0, hSize / 2, 0);
-        this.scene.add(cube);
+        this.geometry = new Tetavi.THREE.BoxGeometry(this.bSize, this.hSize, this.bSize);
+        this.cube = new Tetavi.THREE.Mesh(this.geometry, this.material);
+        this.cube.position.set(0, this.hSize / 2, 0);
+        this.scene.add(this.cube);
 
         var libVersionElem = document.getElementById("libVersion");
         var isIosElem = document.getElementById("myIsIOS");
@@ -54,8 +54,9 @@ export class Player{
         this.volumeRangeElem = document.getElementById("volumeRange");
         // this.progressElem = document.getElementById("myProgress");
 
-
-        this.tetavi = Tetavi.create(renderer, camera, videoSrc, manifestSrc)
+        this.timeline = timeline;
+        this.time = time; 
+        this.tetavi = Tetavi.create(this.renderer, this.camera, this.videoSrc, this.manifestSrc)
     .onSetBar(this.setBar)
     .setFadeAlpha(false)
     .setShadowAngle(0.4)
@@ -75,8 +76,8 @@ export class Player{
     
           if (tetavi.isIos()) isIosElem.innerHTML = "On iOS";
           if (tetavi.getTotalFrames() > 1) {
-            time.totalFrames = tetavi.getTotalFrames();
-            time.frame = tetavi.getFrame();
+            this.time.totalFrames = tetavi.getTotalFrames();
+            this.time.frame = tetavi.getFrame();
     
           }
           if (!tetavi.isVideoBuffering()) {
@@ -86,7 +87,7 @@ export class Player{
           if (tetavi.isPlaying) {
             const totalFrames = tetavi.getTotalFrames();
             const currentFrame = tetavi.getFrame();
-            timeline.setValue(100 * (currentFrame / totalFrames));
+            this.timeline.setValue(100 * (currentFrame / totalFrames));
     
     
           }
